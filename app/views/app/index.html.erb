@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title> AppState </title>
+
+    <%= csrf_meta_tags %>
+
+    <%= javascript_pack_tag 'app' %>
+    <%= stylesheet_pack_tag 'app' %>
+
+    <% if ENV['RAILS_ENV'] == 'development' %>
+      <!-- For development in Windows -->
+      <% @pack_url = "#{request.base_url.sub!("3000", "8080")}/packs/" %>
+      <script src="<%= @pack_url %>app.js?v=<%= DateTime.now %>"></script>
+      <link rel="stylesheet" media="screen" href="<%= @pack_url %>app.css?v=<%= DateTime.now %>">
+    <% end %>
+  </head>
+
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
