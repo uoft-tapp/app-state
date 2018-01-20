@@ -18,11 +18,11 @@ default: &default
 
 development:
   <<: *default
-  database: cp_development
+  database: app_development
 
 test:
   <<: *default
-  database: cp_test
+  database: app_test
 
 production:
   <<: *default
