@@ -8,28 +8,32 @@ const initialState = {
 
 class AppState {
     constructor() {
+
+	//should these be const? lets?
+
         // container for application state
-        var _data = fromJS(initialState);
+        var _data = fromJS(initialState);  //data is an immutable object created from json intialstate
 
         // list of change listeners
         this._listeners = [];
-        // notify listeners of change
+        // notify listeners of change (sortof ish attaches to each listener)
         var notifyListeners = () => this._listeners.forEach(listener => listener());
 
         // parses a property path into a list, as expected by Immutable
         var parsePath = path =>
             path
                 .split(/(\[.*?\])|\./) // split on brackets and dots
-                .filter(key => key) // removed undefined elements
+                .filter(key => key) // removed undefined elements (gary says "falsey")
                 .map(key => {
                     let ind = key.match(/\[(.*)\]/); // check whether the element is in brackets
                     if (ind) {
-                        return eval(ind[1]);
+                        return eval(ind[1]); //injection attack potential??? what is eval's environment??
                     }
                     return key;
                 });
 
         // getter for appState object
+	// why the other syntax of function defn??
         this.get = function(property) {
             return _data.getIn(parsePath(property));
         };
